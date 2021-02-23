@@ -25,9 +25,9 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String username;
+    private String adId;
 
-    private String password;
+    private String email;
 
-    private String role;
+    private String firebaseToken;
 }

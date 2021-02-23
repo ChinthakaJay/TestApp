@@ -1,5 +1,7 @@
 package lk.cj.testapp.controller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,17 +15,10 @@ import java.util.Map;
 @RestController
 public class UserController {
 
-    private final UserDetailsService userDetailsService;
-
-    public UserController(UserDetailsService userDetailsService) {
-        this.userDetailsService = userDetailsService;
-    }
-
     @GetMapping(value = "/user")
-    @PreAuthorize("hasAuthority('SCOPE_GENERAL')")
-    public UserDetails getUser(Authentication authentication) {
+    public ResponseEntity<String> getUser(Authentication authentication) {
         JwtAuthenticationToken token = (JwtAuthenticationToken) authentication;
         Map<String, Object> attributes = token.getTokenAttributes();
-        return userDetailsService.loadUserByUsername(attributes.get("username").toString());
+        return new ResponseEntity<>(attributes.get("mail").toString(), HttpStatus.OK);
     }
 }

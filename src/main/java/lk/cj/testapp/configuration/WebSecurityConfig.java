@@ -13,28 +13,29 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .cors()
+//        http
+//                .cors()
+//                .and()
+//                .csrf().disable()
+//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and()
+//                .authorizeRequests(configurer ->
+//                        configurer
+//                                .antMatchers(
+//                                        "/error",
+//                                        "/login"
+//                                )
+//                                .permitAll()
+//                                .anyRequest()
+//                                .authenticated()
+//                )
+//                .exceptionHandling().disable()
+//                .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
+        http.cors().and()
+                .authorizeRequests().anyRequest().authenticated()
                 .and()
-                .csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeRequests(configurer ->
-                        configurer
-                                .antMatchers(
-                                        "/error",
-                                        "/login"
-                                )
-                                .permitAll()
-                                .anyRequest()
-                                .authenticated()
-                )
-                .exceptionHandling().disable()
-                .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
+                .oauth2ResourceServer().jwt();
     }
 }
