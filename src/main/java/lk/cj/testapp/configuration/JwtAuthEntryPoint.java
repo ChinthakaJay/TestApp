@@ -1,5 +1,7 @@
 package lk.cj.testapp.configuration;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lk.cj.testapp.dto.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -19,7 +21,11 @@ public class JwtAuthEntryPoint implements AuthenticationEntryPoint {
                          HttpServletResponse response,
                          AuthenticationException e)
             throws IOException, ServletException {
-        log.error("Inside commence method");
-        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Error -> Unauthorized");
+
+        ErrorResponse errorResponse = new ErrorResponse("JWT001",e.getMessage());
+        ObjectMapper objectMapper = new ObjectMapper();
+        response.setContentType("application/json");
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.getOutputStream().println(objectMapper.writeValueAsString(errorResponse));
     }
 }

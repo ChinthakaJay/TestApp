@@ -18,9 +18,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and()
                 .authorizeRequests().anyRequest().authenticated()
                 .and()
-                .exceptionHandling().authenticationEntryPoint(jwtAuthEntryPoint)
-                .and()
-                .oauth2ResourceServer().jwt();
+                .oauth2ResourceServer().authenticationEntryPoint(jwtAuthEntryPoint).jwt();
     }
 
 }
