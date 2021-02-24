@@ -15,10 +15,10 @@ import java.util.Map;
 @RestController
 public class UserController {
 
-    @GetMapping(value = "/user")
+    @GetMapping(value = "/api/v1/user")
     public ResponseEntity<String> getUser(Authentication authentication) {
         JwtAuthenticationToken token = (JwtAuthenticationToken) authentication;
         Map<String, Object> attributes = token.getTokenAttributes();
-        return new ResponseEntity<>(attributes.get("mail").toString(), HttpStatus.OK);
+        return new ResponseEntity<>(attributes.get("name").toString(), HttpStatus.OK);
     }
 }
